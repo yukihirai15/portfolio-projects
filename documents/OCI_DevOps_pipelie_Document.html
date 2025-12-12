@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCI DevOps Pipeline Documentation — Prashant Bisht</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        background: #0b0c10;
+        color: white;
+        font-family: "Poppins", sans-serif;
+        line-height: 1.6;
+        padding-bottom: 100px;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 48px;
+        text-align: center;
+        background: linear-gradient(90deg, #00eaff, #9f00ff, #ff00ff);
+        -webkit-background-clip: text;
+        color: transparent;
+        background-size: 300%;
+        animation: grad 4s infinite;
+    }
+
+    @keyframes grad {
+        0% { background-position: 0%; }
+        50% { background-position: 100%; }
+        100% { background-position: 0%; }
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-top: 40px;
+        border-left: 4px solid #00eaff;
+        padding-left: 10px;
+    }
+
+    h3 {
+        font-size: 20px;
+        margin-top: 25px;
+        color: #00eaff;
+    }
+
+    .section {
+        background: rgba(255,255,255,0.05);
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #ffffff22;
+        backdrop-filter: blur(10px);
+        margin-bottom: 30px;
+    }
+
+    pre {
+        background: #111218;
+        padding: 15px;
+        border-radius: 10px;
+        overflow-x: auto;
+        border: 1px solid #ffffff22;
+        color: #00eaff;
+    }
+
+    svg {
+        width: 100%;
+        margin: 20px 0;
+        filter: drop-shadow(0 0 8px #00eaff55);
+    }
+
+    /* BACK BUTTON */
+    .back {
+        display: inline-block;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding: 12px 22px;
+        border-radius: 30px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid #ffffff33;
+        color: #00eaff;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .back:hover {
+        background: #00eaff;
+        color: black;
+        box-shadow: 0 0 20px #00eaffaa;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>OCI DevOps CI/CD Pipeline — Documentation</h1>
+
+<a href="https://projects.yukihirai.in/" class="back">← Back to Projects</a>
+
+<!-- INTRO -->
+<div class="section">
+    <h2>📌 Overview</h2>
+    <p>
+        This project demonstrates a fully automated CI/CD pipeline using <b>Oracle Cloud Infrastructure DevOps</b>.
+        Whenever code is pushed to the repository, the pipeline:
+    </p>
+
+    <ul>
+        <li>Triggers a build pipeline</li>
+        <li>Runs automated tests</li>
+        <li>Builds a Docker image</li>
+        <li>Pushes the image to OCI Container Registry (OCIR)</li>
+        <li>Deploys the app to OKE or Compute Instance via Deployment Pipeline</li>
+    </ul>
+
+    <p>
+        It is designed as a realistic production-style project showcasing practical CI/CD skills.
+    </p>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="section">
+    <h2>📐 Architecture Diagram</h2>
+
+    <!-- Simple SVG Diagram -->
+   <svg viewBox="0 0 820 360" width="100%" style="max-width:820px;">
+    <!-- GitHub Repo -->
+    <rect x="20" y="135" width="150" height="80" fill="#1f1f29" stroke="#00eaff" rx="10"/>
+    <text x="95" y="180" fill="#00eaff" font-size="14" text-anchor="middle">GitHub Repo</text>
+
+    <!-- OCI Code Repo -->
+    <rect x="200" y="135" width="160" height="80" fill="#1f1f29" stroke="#9f00ff" rx="10"/>
+    <text x="280" y="180" fill="#9f00ff" font-size="14" text-anchor="middle">OCI DevOps Repo</text>
+
+    <!-- Build Pipeline -->
+    <rect x="390" y="40" width="160" height="80" fill="#1f1f29" stroke="#ff00ff" rx="10"/>
+    <text x="470" y="85" fill="#ff00ff" font-size="14" text-anchor="middle">Build Pipeline</text>
+
+    <!-- Test Stage -->
+    <rect x="390" y="230" width="160" height="80" fill="#1f1f29" stroke="#00eaff" rx="10"/>
+    <text x="470" y="275" fill="#00eaff" font-size="14" text-anchor="middle">Test Stage</text>
+
+    <!-- Deploy -->
+    <rect x="580" y="135" width="170" height="80" fill="#1f1f29" stroke="#9f00ff" rx="10"/>
+    <text x="665" y="180" fill="#9f00ff" font-size="14" text-anchor="middle">Deployment → OKE</text>
+
+    <!-- ARROWS -->
+    <!-- GitHub → OCI Repo -->
+    <line x1="170" y1="175" x2="200" y2="175" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- OCI → Build -->
+    <line x1="360" y1="175" x2="390" y2="80" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- OCI → Test -->
+    <line x1="360" y1="175" x2="390" y2="275" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Build → Deploy -->
+    <line x1="550" y1="80" x2="580" y2="175" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Test → Deploy -->
+    <line x1="550" y1="275" x2="580" y2="175" stroke="#ffffff" stroke-width="2"/>
+</svg>
+
+
+</div>
+
+<!-- DEPLOYMENT FLOW -->
+<div class="section">
+    <h2>⚙️ CI/CD Deployment Flow</h2>
+
+    <h3>1️⃣ Code Commit / Push</h3>
+    <p>Developer pushes new code to GitHub. This triggers OCI DevOps via webhook.</p>
+
+    <h3>2️⃣ Build Pipeline</h3>
+    <ul>
+        <li>Installs dependencies</li>
+        <li>Runs pre-checks</li>
+        <li>Builds Docker image</li>
+        <li>Stores artifacts in Artifact Registry</li>
+    </ul>
+
+    <h3>3️⃣ Test Automation</h3>
+    <p>Unit tests and integration tests run automatically.</p>
+
+    <h3>4️⃣ Container Push</h3>
+    <p>Image is pushed to <b>OCI Container Registry (OCIR)</b>.</p>
+
+    <h3>5️⃣ Deployment Pipeline</h3>
+    <p>Deploys container to:</p>
+    <ul>
+        <li>OKE (Kubernetes)</li>
+        <li>OR Compute (Docker service)</li>
+    </ul>
+</div>
+
+<!-- BUILD SPEC -->
+<div class="section">
+    <h2>📄 build_spec.yaml</h2>
+    <pre>
+version: 0.1
+component: build
+
+steps:
+  - type: Command
+    name: "Install dependencies"
+    command: |
+      pip install -r requirements.txt
+
+  - type: Command
+    name: "Run tests"
+    command: |
+      pytest
+
+  - type: Command
+    name: "Build Docker Image"
+    command: |
+      docker build -t myapp:latest .
+
+  - type: Command
+    name: "Push to OCIR"
+    command: |
+      docker tag myapp:latest &lt;region.ocir.io/tenancy/myapp:latest&gt;
+      docker push &lt;region.ocir.io/tenancy/myapp:latest&gt;
+    </pre>
+</div>
+
+<!-- DEPLOYMENT SPEC -->
+<div class="section">
+    <h2>📄 deployment_spec.json</h2>
+    <pre>
+{
+  "deploymentType": "OKE",
+  "namespace": "default",
+  "image": "<region.ocir.io/tenancy/myapp:latest>",
+  "replicas": 2,
+  "ports": [
+    {
+      "containerPort": 80,
+      "protocol": "TCP"
+    }
+  ]
+}
+    </pre>
+</div>
+
+<!-- REQUIREMENTS -->
+<div class="section">
+    <h2>🟦 Requirements</h2>
+    <ul>
+        <li>OCI tenancy with DevOps enabled</li>
+        <li>OCIR repository created</li>
+        <li>IAM Policies:
+            <ul>
+                <li>Allow DevOps to manage builds</li>
+                <li>Allow DevOps to manage artifacts</li>
+                <li>Allow DevOps to use OKE</li>
+            </ul>
+        </li>
+        <li>OKE cluster OR OCI Compute instance</li>
+    </ul>
+</div>
+
+<!-- LEARNING -->
+<div class="section">
+    <h2>📘 Lessons Learned</h2>
+    <ul>
+        <li>OCI DevOps has a clean integration with OCIR & OKE</li>
+        <li>Environment variables & secrets should be stored in Vault</li>
+        <li>Build pipelines scale automatically</li>
+        <li>Deployment logs help quickly debug deployment failures</li>
+    </ul>
+</div>
+
+<!-- FUTURE WORK -->
+<div class="section">
+    <h2>🚀 Future Enhancements</h2>
+    <ul>
+        <li>Terraform IaC for full environment provisioning</li>
+        <li>Add Slack or Discord deployment notifications</li>
+        <li>Add Blue/Green or Canary deployment strategy</li>
+        <li>Enable Security Scanning on Docker images</li>
+    </ul>
+</div>
+
+<a href="https://projects.yukihirai.in/" class="back">← Back to Projects</a>
+
+</div>
+</body>
+</html>
