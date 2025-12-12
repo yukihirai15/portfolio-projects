@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Projects | Prashant Bisht</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: #0f0f0f;
+        color: #fff;
+    }
+
+    /* NAVBAR */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 35px;
+        background: rgba(20, 20, 20, 0.7);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid #222;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        animation: fadeIn 1.2s ease;
+    }
+
+    .logo {
+        font-size: 22px;
+        font-weight: 700;
+        color: #6c5ce7;
+        letter-spacing: 0.5px;
+    }
+
+    .nav-links a {
+        color: #ccc;
+        text-decoration: none;
+        margin-left: 25px;
+        font-size: 16px;
+        transition: 0.3s ease;
+    }
+    .nav-links a:hover {
+        color: #fff;
+    }
+
+    /* HEADER */
+    .header {
+        text-align: center;
+        padding: 40px 20px;
+        margin-top: 10px;
+        animation: fadeInUp 0.8s ease;
+    }
+
+    .header h1 {
+        font-size: 42px;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .subtitle {
+        margin-top: 10px;
+        opacity: 0.8;
+        font-size: 18px;
+    }
+
+    /* FILTER BUTTONS */
+    .filters {
+        text-align: center;
+        margin-top: 20px;
+        animation: fadeInUp 1s ease;
+    }
+
+    .filter-btn {
+        background: #1a1a1a;
+        border: 1px solid #333;
+        padding: 8px 20px;
+        border-radius: 20px;
+        color: #ccc;
+        margin: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+        background: #6c5ce7;
+        border-color: #6c5ce7;
+        color: #fff;
+    }
+
+    /* PROJECT CARDS */
+    .projects-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .project-card {
+        background: #1a1a1a;
+        padding: 25px;
+        border-radius: 14px;
+        border: 1px solid #2c2c2c;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 1s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-7px);
+        border-color: #6c5ce7;
+        box-shadow: 0px 0px 12px rgba(108, 92, 231, 0.5);
+    }
+
+    .project-card h3 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .project-card p {
+        margin-top: 10px;
+        opacity: 0.85;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .tag {
+        display: inline-block;
+        background: #6c5ce7;
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        margin-right: 6px;
+        margin-top: 10px;
+    }
+
+    .link-btn {
+        display: inline-block;
+        margin-top: 15px;
+        color: #6c5ce7;
+        font-weight: bold;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: 0.3s;
+    }
+
+    .link-btn:hover {
+        border-bottom: 1px solid #6c5ce7;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">Prashant.dev</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/projects.html">Projects</a>
+        <a href="/skills.html">Skills</a>
+        <a href="/contact.html">Contact</a>
+    </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>My Projects</h1>
+    <p class="subtitle">Cloud • DevOps • NetScaler • Automation • Labs</p>
+</div>
+
+<!-- FILTER BUTTONS -->
+<div class="filters">
+    <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+    <button class="filter-btn" onclick="filterProjects('cloud')">Cloud</button>
+    <button class="filter-btn" onclick="filterProjects('devops')">DevOps</button>
+    <button class="filter-btn" onclick="filterProjects('networking')">Networking</button>
+    <button class="filter-btn" onclick="filterProjects('automation')">Automation</button>
+</div>
+
+<!-- PROJECTS GRID -->
+<div class="projects-container">
+
+    <div class="project-card" data-category="automation networking">
+        <h3>NetScaler Log Analyzer</h3>
+        <p>Python tool to parse NetScaler logs, detect issues, generate reports, and automate root cause analysis.</p>
+        <span class="tag">Python</span>
+        <span class="tag">NetScaler</span>
+        <span class="tag">Automation</span><br>
+        <a href="#" class="link-btn">View on GitHub →</a>
+    </div>
+
+    <div class="project-card" data-category="cloud devops">
+        <h3>OCI DevOps Pipeline Demo</h3>
+        <p>Fully automated CI/CD pipeline using OCI DevOps with build, test, and deploy stages.</p>
+        <span class="tag">OCI</span>
+        <span class="tag">CI/CD</span>
+        <span class="tag">DevOps</span><br>
+        <a href="#" class="link-btn">Documentation →</a>
+    </div>
+
+    <div class="project-card" data-category="cloud">
+        <h3>Cloudflare + GitHub Portfolio</h3>
+        <p>Portfolio with SSL, CDN caching, smart routing and automated build deployments via Cloudflare Pages.</p>
+        <span class="tag">Cloudflare</span>
+        <span class="tag">HTML</span>
+        <span class="tag">CDN</span><br>
+        <a href="#" class="link-btn">Open Project →</a>
+    </div>
+
+    <div class="project-card" data-category="networking">
+        <h3>5G Core – Lab Simulation</h3>
+        <p>Experimental lab to understand AMF–SMF–UPF flows, registration, and PDU session handling.</p>
+        <span class="tag">5G</span>
+        <span class="tag">Networking</span><br>
+        <a href="#" class="link-btn">View Notes →</a>
+    </div>
+
+    <div class="project-card" data-category="devops cloud">
+        <h3>Kubernetes Microservice Deployment</h3>
+        <p>Containerized microservice deployed on K8s with autoscaling, monitoring & Prometheus integration.</p>
+        <span class="tag">Docker</span>
+        <span class="tag">Kubernetes</span><br>
+        <a href="#" class="link-btn">GitHub Repo →</a>
+    </div>
+
+</div>
+
+<script>
+function filterProjects(category) {
+    let cards = document.querySelectorAll(".project-card");
+    let buttons = document.querySelectorAll(".filter-btn");
+
+    // Update active button
+    buttons.forEach(btn => btn.classList.remove("active"));
+    event.target.classList.add("active");
+
+    // Show/hide cards
+    cards.forEach(card => {
+        let cat = card.getAttribute("data-category");
+        if (category === "all" || cat.includes(category)) {
+            card.style.display = "block";
+            card.style.animation = "fadeInUp 0.7s ease";  
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+</script>
+
+</body>
+</html>
